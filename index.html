@@ -4,24 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Sioux Watch Café</title>
+
     <style>
+        :root {
+            /* Colors inspired by the logo */
+            --copper: #c76d47;
+            --copper-light: #eaa889;
+            --beige: #f9f4f0;
+            --text-dark: #4a3b34;
+        }
+
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            background-color: #f5f5f5;
-            color: #333;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: var(--beige);
+            color: var(--text-dark);
         }
 
         header {
-            background-color: #222;
-            color: white;
-            padding: 20px;
             text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border-bottom: 4px solid var(--copper);
         }
 
         header img {
-            max-width: 180px;
+            max-width: 260px;
             margin-bottom: 10px;
+        }
+
+        h1 {
+            color: var(--copper);
+            margin-top: 0;
+            letter-spacing: 1px;
         }
 
         main {
@@ -29,71 +44,80 @@
             margin: 40px auto;
             background: white;
             padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
 
         h2 {
+            color: var(--copper);
             margin-top: 40px;
-            color: #444;
         }
 
         .date-box {
-            background: #e8f0ff;
-            border-left: 5px solid #3b6edc;
-            padding: 15px;
-            margin: 20px 0;
-            font-size: 1.1rem;
+            background: var(--copper-light);
+            border-left: 6px solid var(--copper);
+            padding: 18px;
+            font-size: 1.2rem;
+            border-radius: 6px;
+            color: #fff;
+            margin-bottom: 30px;
+        }
+
+        ul {
+            line-height: 1.6;
         }
 
         footer {
+            margin-top: 60px;
             text-align: center;
-            padding: 20px;
-            margin-top: 50px;
-            color: #666;
+            padding: 25px;
+            color: #7a6b64;
         }
+
     </style>
 </head>
+
 <body>
 
 <header>
     <img src="img/SiouxWatchCafeLogo.jpg" alt="The Sioux Watch Café Logo">
     <h1>The Sioux Watch Café</h1>
-    <p>A relaxed watch club for Sioux colleagues</p>
+    <p>A relaxed gathering for Sioux colleagues who love watches.</p>
 </header>
 
 <main>
     <h2>Welcome!</h2>
     <p>
-        The Sioux Watch Café is an informal gathering where watch enthusiasts from Sioux
-        can enjoy good conversations about all aspects of horology. Whether you're passionate
-        about mechanical movements, complications, materials, dive watches, chronographs,
-        or simply love the craftsmanship—this is the place to share and learn.
+        The Sioux Watch Café is an informal meet-up for watch enthusiasts from Sioux.
+        Join us for relaxed conversations about all aspects of horology—from mechanical
+        movements and complications to design, materials, diving watches, chronographs,
+        and the stories behind unique timepieces.
     </p>
 
     <h2>Next Café Date</h2>
     <div class="date-box">
-        <strong>Next meeting:</strong> <em><!-- Insert date here --> To be announced</em>
+        <strong>Next meeting:</strong> 3 April @ <strong>Labs</strong>
     </div>
 
-    <h2>What We Talk About</h2>
+    <h2>Topics We Explore</h2>
     <ul>
-        <li>Watch technology & movements</li>
-        <li>Diving watches and underwater engineering</li>
-        <li>Chronographs and special complications</li>
-        <li>Design, materials, and craftsmanship</li>
-        <li>Straps, maintenance, and collecting tips</li>
-        <li>Stories behind iconic timepieces</li>
+        <li>Movement technology & craftsmanship</li>
+        <li>Dive watches and underwater engineering</li>
+        <li>Chronographs and other complications</li>
+        <li>Watch design, materials, and aesthetics</li>
+        <li>Maintenance, straps, and daily-use tips</li>
+        <li>Collecting stories and iconic models</li>
     </ul>
 
     <p>
-        Everyone is welcome—whether you’re a seasoned collector or just curious about watches.
-        Grab a drink, join the conversation, and enjoy the atmosphere!
+        Everyone is welcome — whether you're a seasoned collector or simply curious.
+        Grab a drink, enjoy the atmosphere, and talk time with fellow Sioux watch fans!
     </p>
 </main>
 
 <footer>
-    © 2026 The Sioux Watch Café — For Sioux colleagues who love timepieces.
+    © 2026 The Sioux Watch Café — Created by and for Sioux colleagues.
 </footer>
 
 </body>
