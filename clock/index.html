@@ -83,3 +83,117 @@ h2 {
   align-items: center;
   justify-content: center;
   position: relative;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.05),
+              0 5px 10px rgba(0,0,0,0.2);
+}
+
+/* middle split line */
+.flip::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+  top: 50%;
+}
+
+/* flip animation */
+.flip.animate {
+  animation: flip 0.5s ease;
+}
+
+@keyframes flip {
+  0% { transform: rotateX(0deg); }
+  50% { transform: rotateX(-90deg); }
+  100% { transform: rotateX(0deg); }
+}
+
+/* colon */
+.colon {
+  font-size: 2.8rem;
+  display: flex;
+  align-items: center;
+  color: #c46a45;
+  padding: 0 6px;
+}
+
+/* Next meeting bar */
+.next {
+  margin-top: 20px;
+  background: #d89a78;
+  padding: 15px 20px;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>The Sioux Watch Café</h1>
+  <p>A relaxed gathering for Sioux colleagues who like watches.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="container">
+  <div class="card">
+
+    <h2>Live Clock</h2>
+
+    <div class="clock-container">
+      <div class="clock">
+        <div class="flip" id="h1">0</div>
+        <div class="flip" id="h2">0</div>
+        <div class="colon">:</div>
+        <div class="flip" id="m1">0</div>
+        <div class="flip" id="m2">0</div>
+        <div class="colon">:</div>
+        <div class="flip" id="s1">0</div>
+        <div class="flip" id="s2">0</div>
+      </div>
+    </div>
+
+    <div class="next">
+      Next meeting: May 22nd, 2026 @ Labs during the Vrijmibo
+    </div>
+
+  </div>
+</div>
+
+<script>
+function updateClock() {
+  const now = new Date(new Date().toLocaleString("en-US", {
+    timeZone: "Europe/Amsterdam"
+  }));
+
+  const values = [
+    String(now.getHours()).padStart(2, '0'),
+    String(now.getMinutes()).padStart(2, '0'),
+    String(now.getSeconds()).padStart(2, '0')
+  ];
+
+  const digits = (values[0] + values[1] + values[2]).split('');
+  const ids = ["h1","h2","m1","m2","s1","s2"];
+
+  digits.forEach((digit, i) => {
+    const el = document.getElementById(ids[i]);
+
+    if (el.textContent !== digit) {
+      el.textContent = digit;
+
+      el.classList.remove("animate");
+      void el.offsetWidth;
+      el.classList.add("animate");
+    }
+  });
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+
+</body>
+</html>
