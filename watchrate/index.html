@@ -7,7 +7,7 @@
 <style>
   :root{
     --page:#ececec; --card:#f5f3ef; --accent:#c25a36; --accent-d:#a8492b;
-    --panel-1:#1c1c1c; --panel-2:#0b0b0b; --led:#ff3b30; --led-off:#350707;
+    --panel-1:#1c1c1c; --panel-2:#0b0b0b; --led:#ff3b30; --led2:#3be35b; --led-off:#350707;
     --banner:#d68f6b; --muted:#777; --border:#ddd9d1; --ink:#2b2b2b;
   }
   *{box-sizing:border-box}
@@ -59,6 +59,8 @@
   .seg.on{fill:var(--led);filter:drop-shadow(0 0 5px rgba(255,59,48,.8))}
   .colon{display:flex;flex-direction:column;gap:12px;padding:0 3px 6px}
   .colon .dot{width:9px;height:9px;border-radius:50%;background:var(--led);box-shadow:0 0 5px rgba(255,59,48,.8)}
+  .clock.green .seg.on{fill:var(--led2);filter:drop-shadow(0 0 5px rgba(59,227,91,.7))}
+  .clock.green .colon .dot{background:var(--led2);box-shadow:0 0 5px rgba(59,227,91,.7)}
   .watch-row{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
   .nudge-col{display:flex;flex-direction:column;gap:6px}
   .nudge{width:44px;height:38px;font-size:16px;line-height:1;background:#262626;color:#fff;border:none}
@@ -120,7 +122,7 @@
         <div class="panel">
           <p class="plab" id="watchLabel"></p>
           <div class="watch-row">
-            <div class="clock" id="clkWatch"></div>
+            <div class="clock green" id="clkWatch"></div>
             <div class="nudge-col">
               <button class="nudge" id="nUp" aria-label="+1s">&#9650;</button>
               <button class="nudge" id="nDown" aria-label="-1s">&#9660;</button>
@@ -196,7 +198,7 @@ var I18N={
   rate:"Rate",
   perDay:"s/day",
   syncBtn:"<b>Tap-sync</b> &nbsp;(tap on the whole second)",
-  hint:"Use &#9650;/&#9660; to set the watch to the nearest second. Then tap <b>Tap-sync</b> a few times the moment the second hand passes 12 \u2014 this refines the offset to about 0.1 s. Then record the measurement.",
+  hint:"Use &#9650;/&#9660; to set the watch to the nearest second. Then tap <b>Tap-sync</b> a few times at the exact moment your watch's seconds advance \u2014 any whole second works \u2014 to refine the offset to about 0.1 s. Then record the measurement.",
   position:"Position", note:"Note", optional:"optional", record:"Record measurement",
   measurements:"Measurements", noMeasurements:"No measurements recorded yet.", needTwo:"Record at least 2 measurements to calculate the rate.",
   thTime:"Time", thOffset:"Offset", thPosition:"Position", thNote:"Note", del:"delete",
@@ -218,7 +220,7 @@ var I18N={
   rate:"Gang",
   perDay:"s/dag",
   syncBtn:"<b>Tik-sync</b> &nbsp;(tik op de hele seconde)",
-  hint:"Stel met &#9650;/&#9660; het horloge gelijk tot op de seconde. Tik daarna een paar keer op <b>Tik-sync</b> op het moment dat de secondewijzer 12 passeert \u2014 dat verfijnt de offset tot op ~0,1 s. Leg de meting daarna vast.",
+  hint:"Stel met &#9650;/&#9660; het horloge gelijk tot op de seconde. Tik daarna een paar keer op <b>Tik-sync</b> precies op het moment dat de seconde van je horloge verspringt \u2014 elke willekeurige seconde is goed \u2014 om de offset te verfijnen tot op ~0,1 s. Leg de meting daarna vast.",
   position:"Positie", note:"Notitie", optional:"optioneel", record:"Meting vastleggen",
   measurements:"Metingen", noMeasurements:"Nog geen metingen vastgelegd.", needTwo:"Leg minstens 2 metingen vast om de gang te berekenen.",
   thTime:"Tijdstip", thOffset:"Offset", thPosition:"Positie", thNote:"Notitie", del:"verwijder",
