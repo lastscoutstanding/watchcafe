@@ -24,6 +24,9 @@
   .lang button.active{background:var(--accent);color:#fff}
   .lang button:hover{background:#f0ece5}
   .lang button.active:hover{background:var(--accent-d)}
+  .hdr-right{display:flex;align-items:center;gap:10px;flex:none}
+  .help-btn{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:#fff;color:var(--muted);font-weight:700;font-size:15px;padding:0;line-height:1;cursor:pointer}
+  .help-btn:hover{background:#f0ece5;color:var(--ink)}
 
   .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
   .grow{flex:1 1 auto;min-width:0}
@@ -86,6 +89,18 @@
 
   .banner{margin-top:26px;background:var(--banner);color:#fff;font-weight:700;text-align:center;padding:16px;border-radius:8px;font-size:15px}
 
+  .guide{margin-top:18px;background:#fbf3ee;border:1px solid #ecd9cd;border-radius:12px;padding:18px 20px;display:none}
+  .guide-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .guide-head span{font-weight:700;color:var(--accent);font-size:15px}
+  .guide-x{border:none;background:transparent;font-size:20px;line-height:1;color:var(--muted);padding:2px 6px;cursor:pointer}
+  .guide-x:hover{background:transparent;color:var(--ink)}
+  .guide-intro{margin:0 0 12px;font-size:14px;color:var(--ink)}
+  .guide-steps{margin:0;padding:0;list-style:none;counter-reset:gs}
+  .guide-steps li{counter-increment:gs;position:relative;padding:0 0 10px 34px;font-size:14px;line-height:1.5;color:var(--ink)}
+  .guide-steps li:before{content:counter(gs);position:absolute;left:0;top:0;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .guide-steps li:last-child{padding-bottom:0}
+  .guide-note{margin:14px 0 0;font-size:13px;color:#8a3a1d;background:#fbe7dd;border-radius:8px;padding:10px 12px}
+
   @media(max-width:600px){.card{padding:22px 16px 26px}}
 </style>
 </head>
@@ -97,9 +112,12 @@
         <h1>Watch Rate Meter</h1>
         <p class="sub" id="sub"></p>
       </div>
-      <div class="lang">
-        <button data-lang="en">EN</button>
-        <button data-lang="nl">NL</button>
+      <div class="hdr-right">
+        <button class="help-btn" id="helpBtn" aria-label="How it works">?</button>
+        <div class="lang">
+          <button data-lang="en">EN</button>
+          <button data-lang="nl">NL</button>
+        </div>
       </div>
     </div>
 
@@ -110,6 +128,21 @@
       <button class="primary" id="addWatch"></button>
     </div>
     <div class="chips" id="watchChips"></div>
+
+    <div class="guide" id="guide">
+      <div class="guide-head">
+        <span id="guideTitle"></span>
+        <button class="guide-x" id="guideClose" aria-label="Close">&times;</button>
+      </div>
+      <p class="guide-intro" id="guideIntro"></p>
+      <ol class="guide-steps">
+        <li id="gStep1"></li>
+        <li id="gStep2"></li>
+        <li id="gStep3"></li>
+        <li id="gStep4"></li>
+      </ol>
+      <p class="guide-note" id="guideNote"></p>
+    </div>
 
     <div class="block" id="meterBlock">
       <h2><span id="meterLabel"></span> &mdash; <span id="activeWatchName" style="color:var(--accent);text-transform:none;letter-spacing:0">—</span></h2>
@@ -202,6 +235,13 @@ var I18N={
   position:"Position", note:"Note", optional:"optional", record:"Record measurement",
   measurements:"Measurements", noMeasurements:"No measurements recorded yet.", needTwo:"Record at least 2 measurements to calculate the rate.",
   thTime:"Time", thOffset:"Offset", thPosition:"Position", thNote:"Note", del:"delete",
+  guideTitle:"How it works", guideIntro:"Track how fast or slow your watch runs, in seconds per day.",
+  gStep1:"<b>Add a watch</b> \u2014 type its name above and tap Add.",
+  gStep2:"<b>Match the time</b> \u2014 use &#9650;/&#9660; so the green clock matches your watch, then tap <b>Tap-sync</b> a few times on any whole second to fine-tune.",
+  gStep3:"<b>Record</b> the measurement \u2014 add the position if you like.",
+  gStep4:"<b>Come back later</b> \u2014 after a few hours or a day, measure again. The rate is calculated automatically.",
+  guideNote:"One measurement gives only an offset. You need at least two, taken at different times, to get a rate in s/day.",
+  help:"How it works", close:"Close",
   exportBtn:"Export backup (.json)", importBtn:"Import backup",
   banner:"\u00a9 2026 The Sioux Watch Caf\u00e9 \u2014 info@watchcafe.eu",
   pos:{"":"\u2014 not specified \u2014",dial_up:"Dial up",dial_down:"Dial down",crown_up:"Crown up",crown_down:"Crown down",crown_left:"Crown left",crown_right:"Crown right",worn:"Worn (on wrist)"}
@@ -224,6 +264,13 @@ var I18N={
   position:"Positie", note:"Notitie", optional:"optioneel", record:"Meting vastleggen",
   measurements:"Metingen", noMeasurements:"Nog geen metingen vastgelegd.", needTwo:"Leg minstens 2 metingen vast om de gang te berekenen.",
   thTime:"Tijdstip", thOffset:"Offset", thPosition:"Positie", thNote:"Notitie", del:"verwijder",
+  guideTitle:"Zo werkt het", guideIntro:"Meet hoeveel je horloge per dag voor- of achterloopt.",
+  gStep1:"<b>Voeg een horloge toe</b> \u2014 typ de naam hierboven en tik op Toevoegen.",
+  gStep2:"<b>Zet de tijd gelijk</b> \u2014 gebruik &#9650;/&#9660; zodat de groene klok gelijkloopt met je horloge, en tik een paar keer op <b>Tik-sync</b> op een willekeurige hele seconde om te verfijnen.",
+  gStep3:"<b>Leg de meting vast</b> \u2014 eventueel met de positie erbij.",
+  gStep4:"<b>Kom later terug</b> \u2014 meet na een paar uur of een dag opnieuw. De gang wordt dan automatisch berekend.",
+  guideNote:"E\u00e9n meting geeft alleen een offset. Voor een gang in s/dag heb je minstens twee metingen op verschillende momenten nodig.",
+  help:"Zo werkt het", close:"Sluiten",
   exportBtn:"Exporteer back-up (.json)", importBtn:"Importeer back-up",
   banner:"\u00a9 2026 The Sioux Watch Caf\u00e9 \u2014 info@watchcafe.eu",
   pos:{"":"\u2014 niet opgegeven \u2014",dial_up:"Wijzerplaat boven",dial_down:"Wijzerplaat onder",crown_up:"Kroon boven",crown_down:"Kroon onder",crown_left:"Kroon links",crown_right:"Kroon rechts",worn:"Gedragen (aan pols)"}
@@ -286,7 +333,7 @@ function humanSpan(ms){var d=ms/86400000,h=ms/3600000;
   if(d>=1)return d.toFixed(1)+" days";if(h>=1)return h.toFixed(1)+" hours";return Math.round(ms/60000)+" min";}
 
 /* ===== meter session ===== */
-var offsetN=0, syncTaps=[];
+var offsetN=0, syncTaps=[], guideOpen=false;
 function currentOffset(){return syncTaps.length? syncTaps.reduce(function(a,b){return a+b;},0)/syncTaps.length : offsetN;}
 function seedOffset(){var w=activeWatch();
   if(w&&w.measurements.length){var last=w.measurements.slice().sort(function(a,b){return b.t-a.t;})[0];offsetN=Math.round(last.offset);}
@@ -352,7 +399,12 @@ function drawSpark(w){
   var zero="";if(mn<0&&mx>0){var zy=Y(0).toFixed(1);zero='<line x1="'+pad+'" y1="'+zy+'" x2="'+(W-pad)+'" y2="'+zy+'" stroke="#bbb" stroke-dasharray="3 3"/>';}
   spark.innerHTML=zero+'<path d="'+dpath+'" fill="none" stroke="#c25a36" stroke-width="2"/>'+dots;spark.style.display="block";
 }
-function renderAll(){renderWatches();renderMeter();renderHistory();}
+function renderGuide(){
+  var empty=state.watches.length===0;
+  document.getElementById("guide").style.display=(empty||guideOpen)?"block":"none";
+  document.getElementById("guideClose").style.display=empty?"none":"inline-block";
+}
+function renderAll(){renderWatches();renderMeter();renderHistory();renderGuide();}
 function escapeHtml(s){return (s||"").replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
 
 /* ===== apply language to static UI ===== */
@@ -376,6 +428,15 @@ function applyLang(){
   document.getElementById("exportBtn").textContent=t.exportBtn;
   document.getElementById("importBtn").textContent=t.importBtn;
   document.getElementById("banner").textContent=t.banner;
+  document.getElementById("guideTitle").textContent=t.guideTitle;
+  document.getElementById("guideIntro").textContent=t.guideIntro;
+  document.getElementById("gStep1").innerHTML=t.gStep1;
+  document.getElementById("gStep2").innerHTML=t.gStep2;
+  document.getElementById("gStep3").innerHTML=t.gStep3;
+  document.getElementById("gStep4").innerHTML=t.gStep4;
+  document.getElementById("guideNote").textContent=t.guideNote;
+  var hb=document.getElementById("helpBtn");hb.setAttribute("aria-label",t.help);hb.title=t.help;
+  document.getElementById("guideClose").setAttribute("aria-label",t.close);
   var sel=document.getElementById("posSel");
   [].forEach.call(sel.options,function(o){if(t.pos[o.value]!==undefined)o.textContent=t.pos[o.value];});
   [].forEach.call(document.querySelectorAll(".lang button"),function(b){b.classList.toggle("active",b.getAttribute("data-lang")===lang);});
@@ -389,6 +450,9 @@ tick();setInterval(tick,200);
 
 /* ===== events ===== */
 [].forEach.call(document.querySelectorAll(".lang button"),function(b){b.onclick=function(){lang=b.getAttribute("data-lang");try{localStorage.setItem(LKEY,lang);}catch(e){}applyLang();renderAll();};});
+
+document.getElementById("helpBtn").onclick=function(){guideOpen=!guideOpen;renderGuide();if(guideOpen)document.getElementById("guide").scrollIntoView({behavior:"smooth",block:"nearest"});};
+document.getElementById("guideClose").onclick=function(){guideOpen=false;renderGuide();};
 
 document.getElementById("addWatch").onclick=addWatch;
 document.getElementById("newWatch").addEventListener("keydown",function(e){if(e.key==="Enter")addWatch();});
